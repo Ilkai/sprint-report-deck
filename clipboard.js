@@ -11,3 +11,17 @@
         console.log(error);
         this.setState({ error, isLoading:false })
       });
+
+      try {
+      const result = await axios.get(URL, requestObj);
+
+      this.setState({
+        fields: data.fields,
+        isLoading: flase
+      });
+    } catch (error) {
+      this.setState({
+        error,
+        isLoading: false
+      });
+    }

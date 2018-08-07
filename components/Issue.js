@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axois';
 import envs from 'env-config';
 
 const URL = envs.url;
@@ -33,20 +32,19 @@ class Issue extends React.Component {
   }
   async componentDidMount() {
     this.setState({ isLoading: true});
-
-    try {
-      const result = await axios.get(URL, requestObj);
-
-      this.setState({
-        fields: data.fields,
-        isLoading: flase
+    fetch(URL, requestObj)
+      .then(response => {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
+      })
+      .then(response => response.json())
+      .then(data => this.setState({ fields: data.fields, isLoading: false }))
+      .catch(error => {
+        console.log(error);
+        this.setState({ error, isLoading:false })
       });
-    } catch (error) {
-      this.setState({
-        error,
-        isLoading: false
-      });
-    }
   }
 
   render() {
