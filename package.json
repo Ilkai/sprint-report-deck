@@ -1,0 +1,15 @@
+{
+  "name": "sprint-report-generator",
+  "version": "1.0.0",
+  "description": "Generate slide decks for Sprint Reports using Jira's REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "mdx-deck deck.mdx"
+  },
+  "author": "Lynden Noye",
+  "license": "ISC",
+  "devDependencies": {
+    "mdx-deck": "^1.5.10"
+  }
+}
