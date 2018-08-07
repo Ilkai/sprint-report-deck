@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "mdx-deck": "^1.5.10"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
   }
 }
