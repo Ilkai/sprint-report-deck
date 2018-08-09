@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axois';
+// import axios from 'axois';
 import envs from 'env-config';
 
 const URL = envs.url;

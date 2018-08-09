@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "mdx-deck deck.mdx"
+    "start": "mdx-deck deck.mdx",
+    "pdf": "mdx-deck pdf deck.mdx",
+    "build": "mdx-deck build deck.mdx"
   },
   "author": "Lynden Noye",
   "license": "ISC",
