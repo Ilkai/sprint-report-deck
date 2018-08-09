@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import '../css/blokk.css';
 
 const URL = 'http://localhost:3001/lastsprint';
 
@@ -24,19 +23,29 @@ const Issue = styled.li`
   background-color: #fff;
 `
 
-const IssueSummary = styled.span`
-  display: block;
+const IssueSummary = styled.div`
   line-height: 1.5;
   height: 3rem;
   overflow: hidden;
 `
 
-const IssueKey = styled.span`
+const IssueKey = styled.div`
   font-weight: bold;
 `
 
-const IssueShimmer = styled.li`
-  font-family: "BLOKK";
+const IssueLabel = styled.span`
+  display: inline-block;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: bold;
+  padding: 0 0.5rem;
+  background-color: #eee;
+  margin-right: 0.25rem;
+`
+
+const IssueShimmer = Issue.extend`
+  font-family: "BLOKK Neue";
+  color: #ccc;
 `
 
 const ErrorMessage = styled.div`
@@ -74,7 +83,7 @@ class ProgressOverview extends React.Component {
 
     for (let i = 0; i < 8; i++) {
       gridItems.push(
-        <IssueShimmer>
+        <IssueShimmer key={i}>
           AAA-999<br />
           Issue summary that can run over maybe a few lines
         </IssueShimmer>
@@ -103,8 +112,11 @@ class ProgressOverview extends React.Component {
       <IssueList>
         {issues.map((issue, id) =>
           <Issue key={id}>
-            <IssueKey>{issue.key}</IssueKey><br/>
+            <IssueKey>{issue.key}</IssueKey>
             <IssueSummary>{issue.fields.summary}</IssueSummary>
+            {issue.fields.labels.map((tag, id) =>
+              <IssueLabel key={id}>{tag}</IssueLabel>
+            )}
           </Issue>
         )}
       </IssueList>
