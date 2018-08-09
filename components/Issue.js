@@ -1,23 +1,16 @@
 import React from 'react';
-import envs from 'env-config';
 
-const URL = envs.url;
-const USER = envs.user;
-const KEY = envs.key;
+let url = 'https://cors-anywhere.herokuapp.com/?https://domesticcat.atlassian.net/rest/api/2/issue/MTE-1000';
 
 let requestObj = {
   method: 'GET',
-  mode: 'no-cors',
   headers: {
     'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://domesticcat.atlassian.net'
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*'
   },
-  auth: {
-    username: USER,
-    password: KEY
-  },
-  withCredentials: true
+  // credentials: 'include',
+  authorization: 'Basic bHluZGVuQGRvbWVzdGljY2F0LmNvbS5hdTpXQXJoVGdVYWdEaVhxcWtwblBTdTQ4MEE='
 }
 
 class Issue extends React.Component {
@@ -25,14 +18,16 @@ class Issue extends React.Component {
     super(props);
 
     this.state = {
-      fields: [],
+      summary: [],
+      labels: [],
       isLoading: false,
       error: null
     }
   }
-  async componentDidMount() {
+
+  componentDidMount() {
     this.setState({ isLoading: true});
-    fetch(URL, requestObj)
+    fetch(url, requestObj)
       .then(response => {
         if (!response.ok) {
             throw Error(response.statusText);
@@ -40,15 +35,14 @@ class Issue extends React.Component {
         return response;
       })
       .then(response => response.json())
-      .then(data => this.setState({ fields: data.fields, isLoading: false }))
+      .then(data => this.setState({ summary: data.fields.summary, labels: data.fields.labels, isLoading: false }))
       .catch(error => {
-        console.log(error);
-        this.setState({ error, isLoading:false })
+        this.setState({ error, isLoading: false })
       });
   }
 
   render() {
-    const { fields, isLoading, error } = this.state;
+    const { summary, labels, isLoading, error } = this.state;
 
     if (error) {
       return <p>Error</p>;
@@ -60,8 +54,8 @@ class Issue extends React.Component {
 
     return (
       <div>
-        <h1>{fields.summary}</h1>
-        {fields.labels.map(label =>
+        <h1>{summary}</h1>
+        {labels.map(label =>
           <span key={label.objectID}>
             {label}
           </span>
